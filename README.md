@@ -1,4 +1,10 @@
-# ATF and u-boot for mt798x
+# bl-mt798x-philips-hy3000
+
+```bash
+SOC=mt7981 BOARD=philips_hy3000 ./build.sh
+```
+
+## ATF and u-boot for mt798x
 
 ## About bl-mt798x
 - https://cmi.hanwckf.top/p/mt798x-uboot-usage

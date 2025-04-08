@@ -1,16 +1,17 @@
 #!/bin/sh
 
 TOOLCHAIN=aarch64-linux-gnu-
-#UBOOT_DIR=uboot-mtk-20220606
-UBOOT_DIR=uboot-mtk-20230718-09eda825
-#ATF_DIR=atf-20220606-637ba581b
-ATF_DIR=atf-20231013-0ea67d76a
+UBOOT_DIR=uboot-mtk-20220606
+# UBOOT_DIR=uboot-mtk-20230718-09eda825
+ATF_DIR=atf-20220606-637ba581b
+# ATF_DIR=atf-20231013-0ea67d76a
 
 if [ -z "$SOC" ] || [ -z "$BOARD" ]; then
 	echo "Usage: SOC=[mt7981|mt7986] BOARD=<board name> MULTI_LAYOUT=[0|1] $0"
 	echo "eg: SOC=mt7981 BOARD=360t7 $0"
 	echo "eg: SOC=mt7981 BOARD=wr30u MULTI_LAYOUT=1 $0"
 	echo "eg: SOC=mt7981 BOARD=cmcc_rax3000m-emmc $0"
+	echo "eg: SOC=mt7981 BOARD=philips_hy3000 $0"
 	echo "eg: SOC=mt7986 BOARD=redmi_ax6000 MULTI_LAYOUT=1 $0"
 	echo "eg: SOC=mt7986 BOARD=jdcloud_re-cp-03 $0"
 	exit 1

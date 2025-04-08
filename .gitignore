@@ -31,3 +31,5 @@ u-boot.cfg
 /mkgpt/gpttable
 __pycache__
 output/*
+atf-20231013-0ea67d76a/Makefile
+atf-20220606-637ba581b/Makefile
