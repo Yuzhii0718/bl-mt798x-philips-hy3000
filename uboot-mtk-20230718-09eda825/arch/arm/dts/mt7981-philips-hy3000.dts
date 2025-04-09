@@ -18,7 +18,7 @@
 	config {
 		bootcmd = "mtkboardboot";
 		blink_led = "red:system";
-		system_led = "white:system";
+		system_led = "green:system";
 	};
 
 	memory@40000000 {
@@ -51,7 +51,7 @@
 		};
 
 		led@1 {
-			label = "white:system";
+			label = "green:system";
 			gpios = <&gpio 13 GPIO_ACTIVE_LOW>;
 		};
 
