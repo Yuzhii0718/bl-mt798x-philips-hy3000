@@ -47,7 +47,7 @@
 
 		led@0 {
 			label = "red:system";
-			gpios = <&gpio 8 GPIO_ACTIVE_LOW>;
+			gpios = <&gpio 8 GPIO_ACTIVE_HIGH>;
 		};
 
 		led@1 {
