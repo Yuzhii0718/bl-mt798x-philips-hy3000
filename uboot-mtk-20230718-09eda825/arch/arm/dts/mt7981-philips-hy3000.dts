@@ -57,15 +57,6 @@
 
 	};
 
-	reg_1p8v: regulator-1p8v {
-		compatible = "regulator-fixed";
-		regulator-name = "fixed-1.8V";
-		regulator-min-microvolt = <1800000>;
-		regulator-max-microvolt = <1800000>;
-		regulator-boot-on;
-		regulator-always-on;
-	};
-
 	reg_3p3v: regulator-3p3v {
 		  compatible = "regulator-fixed";
 		  regulator-name = "fixed-3.3V";
@@ -83,12 +74,12 @@
 &eth {
 	status = "okay";
 	mediatek,gmac-id = <0>;
-	phy-mode = "sgmii";
+	phy-mode = "2500base-x";
 	mediatek,switch = "mt7531";
 	reset-gpios = <&gpio 39 GPIO_ACTIVE_HIGH>;
 
 	fixed-link {
-		speed = <1000>;
+		speed = <2500>;
 		full-duplex;
 	};
 };
@@ -100,7 +91,6 @@
 	max-frequency = <26000000>;
 	cap-mmc-hw-reset;
 	vmmc-supply = <&reg_3p3v>;
-	vqmmc-supply = <&reg_1p8v>;
 	non-removable;
 	status = "okay";
 };
