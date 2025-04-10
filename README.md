@@ -15,8 +15,10 @@ sudo apt install gcc-aarch64-linux-gnu build-essential flex bison libssl-dev dev
 
 ```bash
 chmod +x build.sh
-SOC=mt7981 BOARD=philips_hy3000 ./build.sh
+SOC=mt7981 BOARD=philips_hy3000 VERSION=2022 ./build.sh
 ```
+
+> VERSION=2022/2023
 
 ## Generate GPT with python2.7
 
