@@ -8,7 +8,7 @@
 ## Prepare
 
 ```
-sudo apt install gcc-aarch64-linux-gnu build-essential flex bison libssl-dev device-tree-compiler qemu-user-static
+sudo apt install gcc-aarch64-linux-gnu build-essential flex bison libssl-dev device-tree-compiler qemu-user-static python2.7
 ```
 
 ## Build
@@ -20,10 +20,13 @@ SOC=mt7981 BOARD=philips_hy3000 VERSION=2022 ./build.sh
 
 > VERSION=2022/2023
 
+Generate file will be in `output`
+
 ## Generate GPT with python2.7
 
 ```bash
-sudo apt install python2.7
 chmod +x generate_gpt.sh
 ./generate_gpt.sh
 ```
+
+Generate file will be in `output_gpt`
