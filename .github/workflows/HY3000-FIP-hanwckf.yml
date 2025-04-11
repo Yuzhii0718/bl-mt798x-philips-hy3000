@@ -24,11 +24,6 @@ on:
         required: true
         default: false
         type: boolean
-      BL2_GEN:
-        description: 'Generate BL2 image'
-        required: true
-        default: false
-        type: boolean
       ssh:
         description: 'SSH connection to Actions'
         required: false
