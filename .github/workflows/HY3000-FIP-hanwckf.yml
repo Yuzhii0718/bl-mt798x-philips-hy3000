@@ -68,6 +68,7 @@ jobs:
         sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
         sudo -E apt-get -qq update
         sudo -E apt-get -qq install $(cat $GITHUB_WORKSPACE/depends/${{ matrix.os }})
+        sudo -E apt-get -qq install rename
         sudo -E apt-get -qq autoremove --purge
         sudo -E apt-get -qq clean
         sudo timedatectl set-timezone "$TZ"
@@ -121,18 +122,6 @@ jobs:
         echo "status=success" >> $GITHUB_OUTPUT
         echo "GPT=1" >> $GITHUB_ENV
 
-    - name: 编译 BL2
-      if: github.event.inputs.BL2_GEN == 'true' && !cancelled()
-      run: |
-        cd bl-mt798x-philips-hy3000
-        chmod +x ./build.sh
-        # 删除 build.sh 中的 BL2 判断逻辑
-        sed -i '/if grep -q "CONFIG_TARGET_ALL_NO_SEC_BOOT=y"/,/fi/d' ./build.sh
-        # 强制编译 BL2
-        SOC=mt7981 BOARD=philips_hy3000 VERSION=${{ github.event.inputs.FIP_VERSION }} ./build.sh bl2
-        echo "BL2=1" >> $GITHUB_ENV
-        echo "status=success" >> $GITHUB_OUTPUT
-
     - name: 查看磁盘使用情况
       if: (!cancelled())
       run: df -hT
@@ -141,14 +130,17 @@ jobs:
       id: organize
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: | 
-        mapfile -t devices < <(grep '^CONFIG_TARGET_DEVICE.*=y' bl-mt798x-philips-hy3000/.config | sed -r 's/.*DEVICE_(.*)=y/\1/')
-        cd bl-mt798x-philips-hy3000/bin/targets/*/*
-        rm -rf packages
-        sudo -E apt-get -qq install rename
-        for val in "${devices[@]}"; do
-          rename "s/.*${val}/${{ env.FILE_DATE }}-${val}$/" *
-          echo "$val"
-        done
+        cd bl-mt798x-philips-hy3000
+        # 获取当前时间戳
+        TIMESTAMP=$(date +"%Y%m%d-%H%M%S")
+        # 重命名 output 目录下的文件
+        if [ -d "output" ]; then
+          rename "s/(.*)\.(.*)/\$1_${TIMESTAMP}.\$2/" output/*
+        fi
+        # 重命名 output_gpt 目录下的文件
+        if [ -d "output_gpt" ]; then
+          rename "s/(.*)\.(.*)/\$1_${TIMESTAMP}.\$2/" output_gpt/*
+        fi
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
 

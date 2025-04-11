@@ -14,12 +14,12 @@ else
 fi
 
 if [ -z "$SOC" ] || [ -z "$BOARD" ]; then
-    echo "Usage: SOC=[mt7981|mt7986] BOARD=<board name> VERSION=[2022|2023] [MULTI_LAYOUT=0|1] [BL2=auto|y|n] $0"
+    echo "Usage: SOC=[mt7981|mt7986] BOARD=<board name> VERSION=[2022|2023] $0"
     echo "eg: SOC=mt7981 BOARD=360t7 VERSION=2022 $0"
-    echo "eg: SOC=mt7981 BOARD=wr30u VERSION=2022 MULTI_LAYOUT=1 $0"
+    echo "eg: SOC=mt7981 BOARD=wr30u VERSION=2022 $0"
     echo "eg: SOC=mt7981 BOARD=cmcc_rax3000m-emmc VERSION=2022 $0"
-    echo "eg: SOC=mt7981 BOARD=philips_hy3000 VERSION=2022 BL2=y $0"
-    echo "eg: SOC=mt7986 BOARD=redmi_ax6000 VERSION=2022 MULTI_LAYOUT=1 BL2=n $0"
+    echo "eg: SOC=mt7981 BOARD=philips_hy3000 VERSION=2022 $0"
+    echo "eg: SOC=mt7986 BOARD=redmi_ax6000 VERSION=2022 $0"
     echo "eg: SOC=mt7986 BOARD=jdcloud_re-cp-03 VERSION=2022 $0"
     exit 1
 fi
@@ -33,8 +33,13 @@ command -v "${TOOLCHAIN}gcc"
 [ "$?" != "0" ] && { echo "${TOOLCHAIN}gcc not found!"; exit 0; }
 export CROSS_COMPILE="$TOOLCHAIN"
 
-ATF_CFG="${SOC}_${BOARD}_defconfig"
-UBOOT_CFG="${SOC}_${BOARD}_defconfig"
+ATF_CFG_SOURCE="${SOC}_${BOARD}_defconfig"
+UBOOT_CFG_SOURCE="${SOC}_${BOARD}_defconfig"
+
+# 为 sources的配置文件做备份
+ATF_CFG="${ATF_CFG:-$ATF_CFG_SOURCE}"
+UBOOT_CFG="${UBOOT_CFG:-$UBOOT_CFG_SOURCE}"
+
 for file in "$ATF_DIR/configs/$ATF_CFG" "$UBOOT_DIR/configs/$UBOOT_CFG"; do
 	if [ ! -f "$file" ]; then
 		echo "$file not found!"
@@ -106,4 +111,5 @@ if grep -q "CONFIG_TARGET_ALL_NO_SEC_BOOT=y" "$ATF_DIR/configs/$ATF_CFG"; then
 		echo "bl2 build fail!"
 		exit 1
 	fi
+	build_bl2
 fi
