@@ -145,8 +145,8 @@ jobs:
       with:
         name: ${{ env.FILE_DATE }}-${{ env.UPLOAD_TAG_NAME }}
         path: |
-          output/*
-          output_gpt/*
+          bl-mt798x-philips-hy3000/output/*
+          bl-mt798x-philips-hy3000/output_gpt/*
 
     - name: 生成固件Release标签
       id: tag
@@ -164,7 +164,10 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        files: ${{ env.FIRMWARE }}/*
+        files: 
+          - bl-mt798x-philips-hy3000/output/*
+          - bl-mt798x-philips-hy3000/output_gpt/*
+        release_name: ${{ env.FILE_DATE }}-${{ env.UPLOAD_TAG_NAME }}
         name: ${{ env.FILE_DATE }}-${{ env.UPLOAD_TAG_NAME }}
         tag_name: ${{ steps.tag.outputs.release_tag }}
         body_path: release.txt
