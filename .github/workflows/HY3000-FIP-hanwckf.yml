@@ -136,6 +136,14 @@ jobs:
         if [ -d "output_gpt" ]; then
           rename "s/(.*)\.(.*)/\$1_${TIMESTAMP}.\$2/" output_gpt/*
         fi
+        # 移动文件到指定目录
+        mkdir -p upload
+        if [ -d "output" ]; then
+          mv output/* upload/
+        fi
+        if [ -d "output_gpt" ]; then
+          mv output_gpt/* upload/
+        fi
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> $GITHUB_OUTPUT
 
@@ -145,8 +153,7 @@ jobs:
       with:
         name: ${{ env.FILE_DATE }}-${{ env.UPLOAD_TAG_NAME }}
         path: |
-          bl-mt798x-philips-hy3000/output/*
-          bl-mt798x-philips-hy3000/output_gpt/*
+          bl-mt798x-philips-hy3000/upload/*
 
     - name: 生成固件Release标签
       id: tag
@@ -165,8 +172,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         files: 
-          - bl-mt798x-philips-hy3000/output/*
-          - bl-mt798x-philips-hy3000/output_gpt/*
+          - bl-mt798x-philips-hy3000/upload/*
         release_name: ${{ env.FILE_DATE }}-${{ env.UPLOAD_TAG_NAME }}
         name: ${{ env.FILE_DATE }}-${{ env.UPLOAD_TAG_NAME }}
         tag_name: ${{ steps.tag.outputs.release_tag }}
