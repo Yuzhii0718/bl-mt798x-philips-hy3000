@@ -34,5 +34,4 @@ Generate file will be in `output_gpt`
 ## Use Action to build
 
 - [x] Build FIP
-- [] Build GPT (Optional)
-- [] Build BL2 (Optional)
+- [ ] Build GPT (Optional)
