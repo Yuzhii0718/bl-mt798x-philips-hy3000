@@ -171,8 +171,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        files: 
-          - bl-mt798x-philips-hy3000/upload/*
+        files: bl-mt798x-philips-hy3000/upload/*
         release_name: ${{ env.FILE_DATE }}-${{ env.UPLOAD_TAG_NAME }}
         name: ${{ env.FILE_DATE }}-${{ env.UPLOAD_TAG_NAME }}
         tag_name: ${{ steps.tag.outputs.release_tag }}
