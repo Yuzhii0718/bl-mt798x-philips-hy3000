@@ -162,6 +162,8 @@ jobs:
         touch release.txt
         echo "- 使用源码：${{ env.REPO_URL }}" >> release.txt
         echo "- 使用分支：${{ env.REPO_BRANCH }}" >> release.txt
+        echo "- 使用版本：${{ github.event.inputs.FIP_VERSION }}" >> release.txt
+        echo "- 编译时间：${{ env.FILE_DATE }}" >> release.txt
         echo "release_tag=${{ env.FILE_DATE }}-${{ env.UPLOAD_TAG_NAME }}" >> $GITHUB_OUTPUT
         echo "status=success" >> $GITHUB_OUTPUT
 
