@@ -145,8 +145,8 @@ jobs:
       with:
         name: ${{ env.FILE_DATE }}-${{ env.UPLOAD_TAG_NAME }}
         path: |
-          bl-mt798x-philips-hy3000/output/*
-          bl-mt798x-philips-hy3000/output_gpt/*
+          output/*
+          output_gpt/*
 
     - name: 生成固件Release标签
       id: tag
